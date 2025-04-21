@@ -1,99 +1,72 @@
-<!DOCTYPE html>
+<!DOCKTYPE HTML>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta property="og:title" content="PAIR CODE" />
-  <meta property="og:description" content="Pair-code linker for WhatsApp bot." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://github.com" />
-  <meta property="og:image" content="https://files.catbox.moe/lx3jq8.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="PAIR CODE" />
-  <meta name="twitter:description" content="Pair-code linker for WhatsApp bot." />
-  <meta name="twitter:image" content="https://files.catbox.moe/lx3jq8.jpg" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link rel="stylesheet" href="style.css">
-  </head>
-<body>
-  <div class="container">
-    <h3>𝐂𝐈𝐏𝐇𝐄𝐑 𝐌𝐃-𝐏𝐀𝐈𝐑 𝐂𝐎𝐃𝐄</h3>
-    <p>🔢 Enter your WhatsApp number with country code.</p>
-    <div class="input-container">
-      <input placeholder="233xxxxxx" type="number" id="number" />
-      <button id="submit">Code</button>
-    </div>
-    <div id="loading-spinner">
-      <i class="fas fa-spinner fa-spin"></i>
-    </div>
-    <main id="pair"></main>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="whatsapp bot pairing code." />
+        <meta name="keywords" content="pair, whatsapp-bot" />
+        <meta name="author" content="IRON-M4N" />
+        <link
+            rel="icon"
+            href="https://cdn.ironman.my.id/u/uugBEhB.jpeg"
+            type="image/jpeg"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Phone Pairing</title>
+    </head>
+    <body>
+        <div class="card">
+            <h2 style="color: white">Enter Phone Number</h2>
+            <input
+                type="text"
+                id="phone"
+                placeholder="Enter your phone number"
+            />
+            <a onclick="submit()">Submit</a>
+            <div id="output"></div>
+        </div>
 
-    <!-- Channel Buttons Start -->
-    <div class="channel-buttons">
-      <a href="https://whatsapp.com/channel/0029VbAUgm5Fi8xfcJspqi3f" target="_blank" class="whatsapp-btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA" />
-        WhatsApp Channel
-      </a>
-      <a href="https://t.me/CIPHER_TECH_BOT_MD" target="_blank" class="telegram-btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" />
-        Telegram Channel
-      </a>
-    </div>
-    <!-- Channel Buttons End -->
+        <script>
+            function cut(input) {
+                return input.replace(/\D/g, "");
+            }
+            async function submit() {
+                var inp = document.getElementById("phone").value;
+                var trim = cut(inp);
 
-    <p>........</p>
-  </div>
+                try {
+                    var res = await fetch(`/pair?code=${trim}`);
+                    var data = await res.json();
 
-  <footer>
-    CIPHERTECH &copy; <span id="currentYear"></span>
-  </footer>
+                    if (res.ok) {
+                        document.getElementById("output").innerHTML = `
+                        <p>Code: ${data.code}</p>
+                        <button class="copy-btn" onclick="copyToClipboard('${data.code}')">Copy to Clipboard</button>
+                        <p id="copy-confirm" class="copy-confirm" style="display: none;">Copied!</p>
+                    `;
+                    } else {
+                        document.getElementById(
+                            "output"
+                        ).innerHTML = `<p>Error: fekd up</p>`;
+                    }
+                } catch (error) {
+                    document.getElementById(
+                        "output"
+                    ).innerHTML = `<p>Error: ${error}</p>`;
+                }
+            }
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
-  <script>
-    let a = document.getElementById("pair");
-    let b = document.getElementById("submit");
-    let c = document.getElementById("number");
-
-    async function Copy() {
-      let text = document.getElementById("copy").innerText;
-      let obj = document.getElementById("copy");
-      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
-      obj.innerText = "✔️ COPIED";
-      obj.style = "color:#00ffcc;font-weight:bold";
-      setTimeout(() => {
-        obj.innerText = text;
-        obj.style = "color:white;font-weight-bold";
-      }, 500);
-    }
-
-    b.addEventListener("click", async (e) => {
-      e.preventDefault();
-      if (!c.value) {
-        a.innerHTML = '<span style="color:#ff4d4d;font-weight:bold">❗ Enter your WhatsApp number with country code.</span>';
-      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
-        a.innerHTML = '<span style="color:#ff4d4d;font-weight:bold">❗ Invalid number format. Please try again.</span>';
-      } else {
-        const bc = c.value.replace(/[^0-9]/g, "");
-        let bb = "", bbc = "", cc = bc.split('');
-        cc.map((a) => {
-          bbc += a;
-          bb += (bbc.length == 3 || bbc.length == 8) ? " " + a : a;
-        });
-        c.type = "text";
-        c.value = "+" + bb;
-        c.style = "color:white;font-size:20px";
-        document.getElementById("loading-spinner").style.display = "block";
-        a.innerHTML = '';
-        let { data } = await axios(`/code?number=${bc}`);
-        let code = data.code || "❗ Service Unavailable";
-        a.innerHTML = `<font id="copy" onclick="Copy()" style="color:#00ffcc;cursor:pointer;font-weight:bold">CODE: <span style="color:white;font-weight:bold">${code}</span></font>`;
-        document.getElementById("loading-spinner").style.display = "none";
-      }
-    });
-
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-  </script>
-</body>
+            function copyToClipboard(text) {
+                navigator.clipboard
+                    .writeText(text)
+                    .then(() => {
+                        document.getElementById("copy-confirm").style.display =
+                            "block";
+                    })
+                    .catch(err => {
+                        alert(err);
+                    });
+            }
+        </script>
+    </body>
 </html>
