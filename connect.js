@@ -4,7 +4,8 @@ const fs = require('fs');
 var prefix = "CIPHER-MD*7"; //your prefix same as in config.PREFIX
 var output = "./session/"; //path where the creds.json will save
 
-async function saveCreds(id) {
+async function saveCreds(CIPHER-MD*70s4RXaKS
+) {
   if (!id.startsWith(prefix)) {
     throw new Error(`Preix doesn't match check if "${prefix}" is correct`);
   }
