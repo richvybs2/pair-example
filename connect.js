@@ -1,25 +1,29 @@
 const { File } = require('megajs');
 const fs = require('fs');
 
-var prefix = "CIPHER-MD*7"; //your prefix same as in config.PREFIX
-var output = "./session/"; //path where the creds.json will save
+const prefix = "CIPHER-MD*7"; // Your prefix
+const output = "./session/"; // Where to save creds.json
 
-async function saveCreds(CIPHER-MD*70s4RXaKS
-) {
+async function saveCreds(id) {
   if (!id.startsWith(prefix)) {
-    throw new Error(`Preix doesn't match check if "${prefix}" is correct`);
+    throw new Error(`Prefix doesn't match. Check if "${prefix}" is correct.`);
   }
 
-  var url = `https://mega.nz/file/0s4RXaKS#L54_Iezf1TQAFaL2eomEkPrd4ZPO4R5yN9AiFLoouUk/${id.replace(prefix, "")}`;
-  var file = File.fromURL(url);
+  const megaIdAndKey = id.replace(prefix, "");
+  const url = `https://mega.nz/file/${megaIdAndKey}`;
+  const file = File.fromURL(url);
+  
   await file.loadAttributes();
-  var pth = output + "creds.json";
+
   if (!fs.existsSync(output)) {
     fs.mkdirSync(output, { recursive: true });
   }
-  
-  var data = await file.downloadBuffer();
-  fs.writeFileSync(pth, data);
+
+  const data = await file.downloadBuffer();
+  fs.writeFileSync(`${output}creds.json`, data);
+
+  console.log("Credentials saved successfully to session/creds.json");
 }
 
-// https://mega.js.org/docs/1.0/tutorial/downloading
+// Call the function with your MEGA ID
+saveCreds("CIPHER-MD*70s4RXaKS#L54_Iezf1TQAFaL2eomEkPrd4ZPO4R5yN9AiFLoouUk");
