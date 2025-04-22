@@ -2,7 +2,7 @@ const { File } = require('megajs');
 const fs = require('fs');
 
 var prefix = "CIPHER-MD*7"; //your prefix same as in config.PREFIX
-var output = "./session.json/"; //path where the creds.json will save
+var output = "./session/"; //path where the creds.json will save
 
 async function saveCreds(id) {
   if (!id.startsWith(prefix)) {
