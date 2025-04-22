@@ -1,29 +1,46 @@
-const { File } = require('megajs');
+const { default: makeWASocket, useSingleFileAuthState } = require('@whiskeysockets/baileys');
 const fs = require('fs');
+const path = require('path');
 
-const prefix = "CIPHER-MD*7"; // Your prefix
-const output = "./session/"; // Where to save creds.json
+const prefix = "CIPHER-MD*7";
+const output = "./session/";
 
-async function saveCreds(id) {
-  if (!id.startsWith(prefix)) {
-    throw new Error(`Prefix doesn't match. Check if "${prefix}" is correct.`);
-  }
-
-  const megaIdAndKey = id.replace(prefix, "");
-  const url = `https://mega.nz/file/${megaIdAndKey}`;
-  const file = File.fromURL(url);
-  
-  await file.loadAttributes();
-
-  if (!fs.existsSync(output)) {
-    fs.mkdirSync(output, { recursive: true });
-  }
-
-  const data = await file.downloadBuffer();
-  fs.writeFileSync(`${output}creds.json`, data);
-
-  console.log("Credentials saved successfully to session/creds.json");
+function generateSessionId(phoneNumber) {
+  const randomPart = Math.random().toString(36).substring(2, 10);
+  return `${prefix}${randomPart}`;
 }
 
-// Call the function with your MEGA ID
-saveCreds("CIPHER-MD*70s4RXaKS#L54_Iezf1TQAFaL2eomEkPrd4ZPO4R5yN9AiFLoouUk");
+async function sendSessionId(sock, userJid, sessionId) {
+  const sessionPath = path.join(output, `${userJid}/creds.json`);
+  if (!fs.existsSync(path.dirname(sessionPath))) {
+    fs.mkdirSync(path.dirname(sessionPath), { recursive: true });
+  }
+
+  fs.writeFileSync(sessionPath, JSON.stringify({ sessionId }));
+
+  await sock.sendMessage(userJid, {
+    text: `✅ Your session ID is:\n\n${sessionId}\n\nUse this to deploy your WhatsApp bot.`
+  });
+}
+
+async function startBot() {
+  const { state, saveState } = useSingleFileAuthState('./auth_info.json');
+  const sock = makeWASocket({ auth: state, printQRInTerminal: true });
+
+  sock.ev.on('messages.upsert', async (m) => {
+    const msg = m.messages[0];
+    if (!msg.message || msg.key.fromMe) return;
+
+    const userJid = msg.key.remoteJid; // User's WhatsApp number
+    const messageText = msg.message.conversation || msg.message.extendedTextMessage?.text || "";
+
+    if (messageText.toLowerCase().includes("link me")) {
+      const sessionId = generateSessionId(userJid);
+      await sendSessionId(sock, userJid, sessionId);
+    }
+  });
+
+  sock.ev.on('creds.update', saveState);
+}
+
+startBot();
