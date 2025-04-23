@@ -1,34 +1,35 @@
-<!DOCKTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="whatsapp bot pairing code." />
-        <meta name="keywords" content="pair, whatsapp-bot" />
-        <meta name="author" content="IRON-M4N" />
-        <link
-            rel="icon"
-            href="https://cdn.ironman.my.id/u/uugBEhB.jpeg"
-            type="image/jpeg"
-        />
-        <link rel="stylesheet" href="style.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Phone Pairing</title>
-    </head>
-    <body>
-        <div class="card">
-            <h3>𝐂𝐈𝐏𝐇𝐄𝐑 𝐌𝐃-𝐏𝐀𝐈𝐑 𝐂𝐎𝐃𝐄</h3>
-            <h2 style="color: white">Enter Phone Number</h2>
-            <input
-                type="text"
-                id="phone"
-                placeholder="Enter your phone number"
-            />
-            <a onclick="submit()">Submit</a>
-            <div id="output"></div>
-        </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="whatsapp bot pairing code." />
+    <meta name="keywords" content="pair, whatsapp-bot" />
+    <meta name="author" content="IRON-M4N" />
+    <link rel="icon" href="https://cdn.ironman.my.id/u/uugBEhB.jpeg" type="image/jpeg" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phone Pairing</title>
+</head>
+<body onload="playSound()">
+    <div class="rain-container" id="rainContainer"></div>
 
-        <script>
-            function cut(input) {
+    <div class="card">
+        <h3>𝐂𝐈𝐏𝐇𝐄𝐑-𝐌𝐃 𝐏𝐀𝐈𝐑 𝐂𝐎𝐃𝐄</h3>
+        <h2>Enter Phone Number</h2>
+        <input type="text" id="phone" placeholder="Enter your phone example +2335574" />
+        <a onclick="submit()">Submit</a>
+        <div id="output"></div>
+    </div>
+
+    <footer>
+        POWERED BY <span>HACKERPRO</span>
+    </footer>
+
+    <audio id="entranceSound" src="https://cdn.pixabay.com/audio/2022/10/31/audio_8cf225e1c1.mp3" preload="auto"></audio>
+    <script>
+        
+        
+        function cut(input) {
                 return input.replace(/\D/g, "");
             }
             async function submit() {
@@ -68,6 +69,26 @@
                         alert(err);
                     });
             }
-        </script>
-    </body>
+        
+        
+        function playSound() {
+            const sound = document.getElementById("entranceSound");
+            sound.volume = 0.5;
+            sound.play();
+        }
+
+        // Create animated falling text repeatedly
+        setInterval(() => {
+            const container = document.getElementById("rainContainer");
+            const el = document.createElement("div");
+            el.className = "falling-text";
+            el.innerText = "DEVELOPED BY CIPHERTECH";
+            el.style.left = Math.random() * 100 + "vw";
+            el.style.animationDuration = 3 + Math.random() * 3 + "s";
+            el.style.opacity = 0.2 + Math.random() * 0.3;
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 7000);
+        }, 500);
+    </script>
+</body>
 </html>
