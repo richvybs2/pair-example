@@ -1,173 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
-	font-family: Arial, sans-serif;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-	margin: 0;
-	background-image: url("https://cdn.ironman.my.id/i/2iceb4.jpeg");
-	background-size: cover;
-	background-position: center;
+    background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    animation: bodyFadeIn 1s ease-in-out;
+    position: relative;
+}
+
+@keyframes bodyFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .card {
-	padding: 20px;
-	border-radius: 6px;
-	backdrop-filter: blur(4px);
-	background: rgba(255, 255, 255, 0.2);
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-	width: 300px;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+    background: #1e1e2f;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    animation: slideUp 1.2s ease-out;
+    z-index: 1;
 }
 
-input {
-	width: 80%;
-	padding: 10px;
-	margin-bottom: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	background-color: rgba(255, 255, 255, 0.5);
-	text-align: center;
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    color: #00ffe1;
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { text-shadow: 0 0 10px #00ffe1; }
+    50% { text-shadow: 0 0 20px #00d6c5; }
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #ffffff;
+}
+
+input[type="text"] {
+    padding: 0.7rem;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    margin-bottom: 1rem;
+    outline: none;
+    font-size: 1rem;
+    background: #2c3e50;
+    color: white;
+    transition: 0.3s ease;
+    animation: fadeInInput 1.5s ease;
+}
+
+input[type="text"]:focus {
+    box-shadow: 0 0 12px #00ffe1;
+    background: #34495e;
+}
+
+@keyframes fadeInInput {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 a {
-	position: relative;
-	display: inline-block;
-	padding: 15px 35px;
-	margin: 6px 0;
-	color: #fff;
-	text-decoration: none;
-	text-transform: uppercase;
-	transition: 0.5s;
-	letter-spacing: 4px;
-	overflow: hidden;
-	margin-right: 50px;
-	margin-left: 50px;
+    display: inline-block;
+    background-color: #00ffe1;
+    color: #1e1e2f;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 255, 225, 0.4);
+    animation: bounceIn 1.5s ease;
 }
 
 a:hover {
-	background: #03e9f4;
-	color: #050801;
-	box-shadow:
-		0 0 5px #03e9f4,
-		0 0 25px #03e9f4,
-		0 0 50px #03e9f4,
-		0 0 200px #03e9f4;
-	-webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+    background-color: #00d6c5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 225, 0.6);
 }
 
-a span {
-	position: absolute;
-	display: block;
-}
-
-a span:nth-child(1) {
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 8px;
-	background: linear-gradient(90deg, transparent, #03e9f4);
-	animation: animate1 2s linear infinite;
-}
-
-@keyframes animate1 {
-	0% {
-		left: -100%;
-	}
-
-	50%,
-	100% {
-		left: 100%;
-	}
-}
-
-a span:nth-child(2) {
-	top: -100%;
-	right: 0;
-	width: 2px;
-	height: 100%;
-	background: linear-gradient(180deg, transparent, #03e9f4);
-	animation: animate2 1s linear infinite;
-	animation-delay: 0.25s;
-}
-
-@keyframes animate2 {
-	0% {
-		top: -100%;
-	}
-
-	50%,
-	100% {
-		top: 100%;
-	}
-}
-
-a span:nth-child(3) {
-	bottom: 0;
-	right: 0;
-	width: 100%;
-	height: 2px;
-	background: linear-gradient(270deg, transparent, #03e9f4);
-	animation: animate3 1s linear infinite;
-	animation-delay: 0.5s;
-}
-
-@keyframes animate3 {
-	0% {
-		right: -100%;
-	}
-
-	50%,
-	100% {
-		right: 100%;
-	}
-}
-
-a span:nth-child(4) {
-	bottom: -100%;
-	left: 0;
-	width: 2px;
-	height: 100%;
-	background: linear-gradient(360deg, transparent, #03e9f4);
-	animation: animate4 1s linear infinite;
-	animation-delay: 0.75s;
-}
-
-@keyframes animate4 {
-	0% {
-		bottom: -100%;
-	}
-
-	50%,
-	100% {
-		bottom: 100%;
-	}
+@keyframes bounceIn {
+    0% { transform: scale(0.95); opacity: 0; }
+    60% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
 }
 
 #output {
-	margin-top: 20px;
-	color: white;
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #00ffe1;
+    animation: fadeIn 2s ease-in;
 }
 
-#phone {
-	color: black;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.copy-btn {
-	margin-top: 10px;
-	padding: 5px 10px;
-	background-color: #28a745;
-	color: white;
-	border: none;
-	cursor: pointer;
-	border-radius: 5px;
+footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    text-align: center;
+    opacity: 0;
+    animation: fadeFooter 2s ease forwards;
+    animation-delay: 1s;
+    z-index: 1;
 }
 
-.copy-confirm {
-	margin-top: 10px;
-	color: #28a745;
-      }
+@keyframes fadeFooter {
+    to { opacity: 1; }
+}
+
+footer span {
+    color: #00ffe1;
+    font-weight: bold;
+}
+
+.bg-text {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: rgba(0, 255, 225, 0.08);
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 0;
+    animation: dropIn 2.5s ease-out forwards;
+}
+
+@keyframes dropIn {
+    to {
+        top: 50px;
+        opacity: 0.1;
+    }
+}
+
+
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.falling-text {
+    position: absolute;
+    top: -40px;
+    font-size: 1.2rem;
+    color: rgba(0, 255, 225, 0.15);
+    font-weight: bold;
+    white-space: nowrap;
+    animation-name: fall;
+    animation-timing-function: linear;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+    }
+}
