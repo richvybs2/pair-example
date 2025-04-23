@@ -188,3 +188,64 @@ footer span {
         transform: translateY(110vh);
     }
 }
+
+/* Style the Submit button */
+.card a {
+    display: inline-block;
+    background: linear-gradient(135deg, #00ffe1, #00b8ff);
+    color: #0f0f1a;
+    padding: 0.7rem 1.4rem;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 255, 225, 0.3);
+    text-align: center;
+    margin-top: 1rem;
+    text-decoration: none;
+}
+
+.card a:hover {
+    background: linear-gradient(135deg, #00d6c5, #009fd9);
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 255, 225, 0.5);
+}
+
+/* Style for the output copy button */
+.copy-btn {
+    margin-top: 0.5rem;
+    background: #00ffe1;
+    color: #1b1b2f;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: #00c8b0;
+}
+
+/* Copied confirmation */
+.copy-confirm {
+    color: #00ffe1;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Optional subtle fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+        }
+    
