@@ -9,7 +9,7 @@ async function saveCreds(id) {
     throw new Error(`Preix doesn't match check if "${prefix}" is correct`);
   }
 
-  var url = `https://mega.nz/file/${id.replace(prefix, "")}`;
+  var url = `https://mega.nz/file/70s4RXaKS#L54_Iezf1TQAFaL2eomEkPrd4ZPO4R5yN9AiFLoouUk`;
   var file = File.fromURL(url);
   await file.loadAttributes();
   var pth = output + "creds.json";
